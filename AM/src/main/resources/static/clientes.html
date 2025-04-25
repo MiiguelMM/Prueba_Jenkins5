@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes - Xtart Tech Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="clientes.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="tech-grid"></div>
+        <div class="floating-particles"></div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    
+                    <img src="xtartfp_logo.jpg" alt="Xtart Tech Solutions" class="logo-image">
+                </div>
+                <h1><span class="company-name">XTART SOLUTIONS</span></h1>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="#" class="nav-link">Servicios</a></li>
+                    <li><a href="#" class="nav-link">Nosotros</a></li>
+                    <li><a href="#" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <h2 class="subtitle">GESTIÓN DE CLIENTES - Sistema avanzado de administración y seguimiento</h2>
+        
+        <!-- Menú de navegación -->
+        <div class="menu">
+            <a href="index.html">Panel Principal</a>
+            <a href="clientes.html" class="active">Gestión de Clientes</a>
+            <a href="empleados.html">Gestión de Empleados</a>
+            <a href="productos.html">Gestión de Productos</a>
+            <a href="ventas.html">Gestión de Ventas</a>
+        </div>
+        
+        <!-- Panel de estadísticas -->
+        <div class="status-panel">
+            <div class="status-card">
+                <div class="status-card-title">CLIENTES TOTALES</div>
+                <div class="status-card-value" id="total-clientes">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">CLIENTES ACTIVOS</div>
+                <div class="status-card-value" id="clientes-activos">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">CLIENTES INACTIVOS</div>
+                <div class="status-card-value" id="clientes-inactivos">0</div>
+            </div>
+        </div>
+        
+        <!-- Panel principal de clientes -->
+        <div class="client-panel">
+            <!-- Panel de control lateral -->
+            <div class="control-panel">
+                <h3 class="panel-title">Panel de Control</h3>
+                <div class="control-option">
+                    <button class="control-button" id="btn-agregar">Agregar Cliente</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-listar">Listar Todos los Clientes</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-buscar-panel">Buscar Cliente</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-actualizar-panel">Actualizar Cliente</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-detalles-panel">Ver Detalles de Cliente</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-oferta-panel">Enviar Oferta</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-frecuentes">Clientes Frecuentes</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-quejas">Gestión de Quejas</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-reporte">Generar Reporte</button>
+                </div>
+            </div>
+            
+            <!-- Área principal de contenido -->
+            <div class="content-area" id="main-content">
+                <!-- Área de búsqueda -->
+                <div class="search-box">
+                    <input type="text" class="search-input" id="search-nombre" placeholder="Buscar cliente por nombre...">
+                    <button class="search-button" id="btn-buscar">Buscar</button>
+                </div>
+                
+                <!-- Área de notificaciones -->
+                <div id="notification-area"></div>
+                
+                <!-- Tabla de clientes -->
+                <div class="client-table-container">
+                    <table class="client-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientes-table-body">
+                            <!-- Los clientes se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para agregar cliente (inicialmente oculto) -->
+        <div class="hidden-form" id="form-agregar">
+            <div class="content-area">
+                <h3 class="panel-title">Agregar Nuevo Cliente</h3>
+                
+                <div class="form-container">
+                    <form id="cliente-form">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" class="form-input" name="apellido">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-input" name="telefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-input" name="direccion" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-input" name="password" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Guardar Cliente</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-to-list">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para actualizar cliente -->
+        <div class="hidden-form" id="form-actualizar">
+            <div class="content-area">
+                <h3 class="panel-title">Actualizar Cliente</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Cliente</label>
+                        <input type="number" class="form-input" id="id-actualizar" required>
+                        <button class="submit-btn" id="btn-cargar-cliente" style="margin-top: 10px;">Cargar Cliente</button>
+                    </div>
+                    
+                    <form id="actualizar-form" style="display: none;">
+                        <input type="hidden" id="actualizar-id">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" id="actualizar-nombre">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="actualizar-email">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-input" id="actualizar-telefono">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-input" id="actualizar-direccion">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <select class="form-input" id="actualizar-activo">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-btn">Actualizar Cliente</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-from-actualizar">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vista de detalles del cliente -->
+        <div class="hidden-form" id="form-detalles">
+            <div class="content-area">
+                <h3 class="panel-title">Detalles del Cliente</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Cliente</label>
+                        <div class="search-box">
+                            <input type="number" class="search-input" id="id-detalles" required>
+                            <button class="search-button" id="btn-buscar-detalles">Buscar</button>
+                        </div>
+                    </div>
+                    
+                    <div id="detalles-contenido" style="display: none;">
+                        <div class="client-details">
+                            <h3 id="detalles-nombre"></h3>
+                            <div class="detail-row">
+                                <div class="detail-label">ID:</div>
+                                <div class="detail-value" id="detalles-id"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Email:</div>
+                                <div class="detail-value" id="detalles-email"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Teléfono:</div>
+                                <div class="detail-value" id="detalles-telefono"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Dirección:</div>
+                                <div class="detail-value" id="detalles-direccion"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Estado:</div>
+                                <div class="detail-value" id="detalles-estado"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="nav-back" id="back-from-detalles">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para enviar oferta -->
+        <div class="hidden-form" id="form-oferta">
+            <div class="content-area">
+                <h3 class="panel-title">Enviar Oferta a Cliente</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Cliente</label>
+                        <input type="number" class="form-input" id="id-oferta" required>
+                    </div>
+                    <button class="submit-btn" id="btn-enviar-oferta">Enviar Oferta</button>
+                    
+                    <a href="#" class="nav-back" id="back-from-oferta">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="mini-logo"></div>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Soporte</a>
+                </div>
+                <p>© 2025 Xtart Tech Solutions | Todos los derechos reservados</p>
+                <p class="footer-motto">Innovación. Excelencia. Futuro.</p>
+                <div class="footer-tech-line"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="clientes.js"></script>
+</body>
+</html>

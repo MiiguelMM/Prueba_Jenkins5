@@ -28,6 +28,9 @@ public class MenuGestionFacturas {
     private DetalleFacturaRespository detalleFacturaRespository;
 
     @Autowired
+    private DetalleFacturaRespository detalleFacturaRepository;
+
+    @Autowired
     private ProductoRepository productoRepository;
 
     @Autowired
@@ -36,7 +39,7 @@ public class MenuGestionFacturas {
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
-    void menuGestionFacturas() {
+    public void menuGestionFacturas() {
         Scanner n = new Scanner(System.in);
         boolean salir = false;
 
@@ -248,14 +251,29 @@ public class MenuGestionFacturas {
     }
 
     void verVentasPorProducto() {
-        // Implementar lógica para ver ventas por producto
-        System.out.println("Ventas por producto.");
+        List<Object[]> resultados = detalleFacturaRepository.findVentasPorProducto();
+    
+        System.out.println("Ventas por producto:");
+        for (Object[] fila : resultados) {
+            Producto producto = (Producto) fila[0];
+            Long totalVendidas = (Long) fila[1];
+    
+            System.out.println(producto.getNombre() + " → " + totalVendidas + " unidades vendidas");
+        }
     }
-
+    
     void verVentasPorVendedor() {
-        // Implementar lógica para ver ventas por vendedor
-        System.out.println("Ventas por vendedor.");
+        List<Object[]> resultados = facturaRepository.findVentasPorVendedor();
+    
+        System.out.println("Ventas por vendedor:");
+        for (Object[] fila : resultados) {
+            Empleado empleado = (Empleado) fila[0];
+            Long totalVentas = (Long) fila[1];
+    
+            System.out.println(empleado.getNombre() + " " + empleado.getApellido() + " → " + totalVentas + " ventas");
+        }
     }
+    
 
     void exportarVentas() {
         // Implementar lógica para exportar ventas

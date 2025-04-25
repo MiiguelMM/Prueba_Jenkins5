@@ -15,7 +15,7 @@ public class MenuGestionEmpleados {
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
-    void menuGestionEmpleados() {
+    public void menuGestionEmpleados() {
         Scanner n = new Scanner(System.in);
         boolean salir = false;
 

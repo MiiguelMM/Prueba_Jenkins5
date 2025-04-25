@@ -2,18 +2,30 @@ package com.crm.AM;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
-import com.crm.AM.menuConsola.Menu;
 
 @SpringBootApplication
 public class ProyectoFinalApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(ProyectoFinalApplication.class, args);
-		  // Crear un objeto Scanner para leer desde la consola
-		  Menu menu = context.getBean(Menu.class);
-		  menu.primerMenu();
+
+		SpringApplication.run(ProyectoFinalApplication.class, args);
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		System.out.println("Hasta la polla");
+		// ApplicationContext context = SpringApplication.run(ProyectoFinalApplication.class, args);
+		// Menu menu = context.getBean(Menu.class);
+		// menu.primerMenu();
+		
+		// Application.launch(Menu.class, args);
 		  
         // Scanner scanner = new Scanner(System.in);
 

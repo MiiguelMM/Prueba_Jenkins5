@@ -1,5 +1,7 @@
 package com.crm.AM.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ public class DetalleFactura {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference // Esto evita la serialización circular
     @JoinColumn(name = "factura_id", nullable = false)
     private Factura factura;
 

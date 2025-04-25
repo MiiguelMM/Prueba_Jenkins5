@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Facturas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gestión de Facturas</h1>
+
+    <!-- Formulario para crear o actualizar factura -->
+    <div>
+        <h3>Crear o Actualizar Factura</h3>
+        <input type="number" id="clienteId" placeholder="ID Cliente" required>
+        <input type="number" id="empleadoId" placeholder="ID Empleado" required>
+        <input type="number" id="total" placeholder="Total" required>
+        <input type="date" id="fecha" required>
+        <button class="button" onclick="crearFactura()">Crear Factura</button>
+    </div>
+
+    <!-- Buscar factura por ID -->
+    <div>
+        <h3>Buscar Factura</h3>
+        <input type="number" id="buscarFacturaId" placeholder="ID Factura" oninput="buscarFactura()">
+    </div>
+
+    <!-- Lista de facturas -->
+    <h3>Lista de Facturas</h3>
+    <table class="table" id="facturasTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente ID</th>
+                <th>Empleado ID</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="facturasList">
+            <!-- Las facturas serán listadas aquí -->
+        </tbody>
+    </table>
+
+    <!-- Consultar clientes frecuentes -->
+    <div>
+        <h3>Clientes Frecuentes</h3>
+        <button class="button" onclick="consultarClientesFrecuentes()">Ver Clientes Frecuentes</button>
+        <table class="table" id="clientesFrecuentesTable">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Total Compras</th>
+                </tr>
+            </thead>
+            <tbody id="clientesFrecuentesList">
+                <!-- Los clientes frecuentes serán listados aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Consultar ventas por vendedor -->
+    <div>
+        <h3>Ventas por Vendedor</h3>
+        <button class="button" onclick="consultarVentasPorVendedor()">Ver Ventas por Vendedor</button>
+        <table class="table" id="ventasPorVendedorTable">
+            <thead>
+                <tr>
+                    <th>Vendedor</th>
+                    <th>Total Ventas</th>
+                </tr>
+            </thead>
+            <tbody id="ventasPorVendedorList">
+                <!-- Las ventas por vendedor serán listadas aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Función para obtener todas las facturas
+        function obtenerFacturas() {
+            fetch('http://localhost:8080/api/facturas')
+                .then(response => response.json())
+                .then(facturas => {
+                    mostrarFacturas(facturas);
+                })
+                .catch(error => console.error('Error al obtener las facturas:', error));
+        }
+
+        // Función para mostrar las facturas en la tabla
+        function mostrarFacturas(facturas) {
+            const listaFacturas = document.getElementById('facturasList');
+            listaFacturas.innerHTML = ''; // Limpiar la lista
+            facturas.forEach(factura => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${factura.id}</td>
+                    <td>${factura.cliente.id}</td>
+                    <td>${factura.empleado.id}</td>
+                    <td>${factura.total}</td>
+                    <td>${factura.fecha}</td>
+                    <td>
+                        <button class="button" onclick="eliminarFactura(${factura.id})">Eliminar</button>
+                        <button class="button" onclick="aplicarDescuento(${factura.id})">Aplicar Descuento</button>
+                    </td>
+                `;
+                listaFacturas.appendChild(tr);
+            });
+        }
+
+        // Función para crear una nueva factura
+        function crearFactura() {
+            const nuevaFactura = {
+                cliente: { id: document.getElementById('clienteId').value },
+                empleado: { id: document.getElementById('empleadoId').value },
+                total: document.getElementById('total').value,
+                fecha: document.getElementById('fecha').value
+            };
+
+            fetch('http://localhost:8080/api/facturas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(nuevaFactura)
+            })
+            .then(response => response.json())
+            .then(factura => {
+                obtenerFacturas(); // Actualizar la lista de facturas
+            })
+            .catch(error => console.error('Error al crear la factura:', error));
+        }
+
+        // Función para eliminar una factura
+        function eliminarFactura(id) {
+            fetch(`http://localhost:8080/api/facturas/${id}`, {
+                method: 'DELETE'
+            })
+            .then(() => {
+                obtenerFacturas(); // Actualizar la lista después de eliminar
+            })
+            .catch(error => console.error('Error al eliminar la factura:', error));
+        }
+
+        // Función para aplicar un descuento
+        function aplicarDescuento(id) {
+            const descuento = prompt("Ingrese el porcentaje de descuento: ");
+            if (descuento) {
+                fetch(`http://localhost:8080/api/facturas/${id}/aplicar-descuento?porcentajeDescuento=${descuento}`, {
+                    method: 'PATCH'
+                })
+                .then(response => response.json())
+                .then(factura => {
+                    obtenerFacturas(); // Actualizar la lista después de aplicar el descuento
+                })
+                .catch(error => console.error('Error al aplicar el descuento:', error));
+            }
+        }
+
+        // Función para buscar una factura por ID
+        function buscarFactura() {
+            const facturaId = document.getElementById('buscarFacturaId').value;
+            fetch(`http://localhost:8080/api/facturas/${facturaId}`)
+                .then(response => response.json())
+                .then(factura => {
+                    mostrarFacturas([factura]); // Mostrar solo la factura encontrada
+                })
+                .catch(error => console.error('Error al buscar la factura:', error));
+        }
+
+        // Función para consultar clientes frecuentes
+        function consultarClientesFrecuentes() {
+            fetch('http://localhost:8080/api/facturas/clientes-frecuentes')
+                .then(response => response.json())
+                .then(clientes => {
+                    mostrarClientesFrecuentes(clientes);
+                })
+                .catch(error => console.error('Error al obtener clientes frecuentes:', error));
+        }
+
+        // Función para mostrar los clientes frecuentes
+        function mostrarClientesFrecuentes(clientes) {
+            const listaClientes = document.getElementById('clientesFrecuentesList');
+            listaClientes.innerHTML = ''; // Limpiar la lista
+            clientes.forEach(cliente => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${cliente[0]}</td>
+                    <td>${cliente[1]}</td>
+                `;
+                listaClientes.appendChild(tr);
+            });
+        }
+
+        // Función para consultar las ventas por vendedor
+        function consultarVentasPorVendedor() {
+            fetch('http://localhost:8080/api/facturas/ventas-por-vendedor')
+                .then(response => response.json())
+                .then(ventas => {
+                    mostrarVentasPorVendedor(ventas);
+                })
+                .catch(error => console.error('Error al obtener ventas por vendedor:', error));
+        }
+
+        // Función para mostrar las ventas por vendedor
+        function mostrarVentasPorVendedor(ventas) {
+            const listaVentas = document.getElementById('ventasPorVendedorList');
+            listaVentas.innerHTML = ''; // Limpiar la lista
+            ventas.forEach(venta => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${venta[0]}</td>
+                    <td>${venta[1]}</td>
+                `;
+                listaVentas.appendChild(tr);
+            });
+        }
+
+        // Cargar las facturas al cargar la página
+        window.onload = obtenerFacturas;
+    </script>
+
+</body>
+</html>

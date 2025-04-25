@@ -67,6 +67,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		  <!-- JavaFX -->
+    	<dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>20</version> <!-- Usa la que tengas -->
+    	</dependency>
 	</dependencies>
 
 	<build>
@@ -75,7 +81,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>0.0.8</version>
+            <configuration>
+                <mainClass>com.crm.AM.SpringBootJavaFxApp</mainClass>
+            </configuration>
+        </plugin>
 		</plugins>
+		
 	</build>
 
 </project>

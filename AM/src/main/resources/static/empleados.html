@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Empleados - Xtart Tech Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="empleados.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="tech-grid"></div>
+        <div class="floating-particles"></div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    
+                    <img src="xtartfp_logo.jpg" alt="Xtart Tech Solutions" class="logo-image">
+                </div>
+                <h1><span class="company-name">XTART SOLUTIONS</span></h1>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="#" class="nav-link">Servicios</a></li>
+                    <li><a href="#" class="nav-link">Nosotros</a></li>
+                    <li><a href="#" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <h2 class="subtitle">GESTIÓN DE EMPLEADOS - Sistema avanzado de administración de personal</h2>
+        
+        <!-- Menú de navegación -->
+        <div class="menu">
+            <a href="index.html">Panel Principal</a>
+            <a href="clientes.html">Gestión de Clientes</a>
+            <a href="empleados.html" class="active">Gestión de Empleados</a>
+            <a href="productos.html">Gestión de Productos</a>
+            <a href="ventas.html">Gestión de Ventas</a>
+        </div>
+        
+        <!-- Panel de estadísticas -->
+        <div class="status-panel">
+            <div class="status-card">
+                <div class="status-card-title">EMPLEADOS TOTALES</div>
+                <div class="status-card-value" id="total-empleados">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">EMPLEADOS ACTIVOS</div>
+                <div class="status-card-value" id="empleados-activos">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">EMPLEADOS INACTIVOS</div>
+                <div class="status-card-value" id="empleados-inactivos">0</div>
+            </div>
+        </div>
+        
+        <!-- Panel principal de empleados -->
+        <div class="employee-panel">
+            <!-- Panel de control lateral -->
+            <div class="control-panel">
+                <h3 class="panel-title">Panel de Control</h3>
+                <div class="control-option">
+                    <button class="control-button" id="btn-agregar">Agregar Empleado</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-listar">Listar Todos los Empleados</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-buscar-panel">Buscar Empleado</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-actualizar-panel">Actualizar Empleado</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-detalles-panel">Ver Detalles de Empleado</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-asignar-rol">Asignar Rol</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-reporte">Generar Reporte</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-exportar">Exportar Datos</button>
+                </div>
+            </div>
+            
+            <!-- Área principal de contenido -->
+            <div class="content-area" id="main-content">
+                <!-- Área de búsqueda -->
+                <div class="search-box">
+                    <input type="text" class="search-input" id="search-empleado" placeholder="Buscar empleado por nombre o apellido...">
+                    <button class="search-button" id="btn-buscar">Buscar</button>
+                </div>
+                
+                <!-- Área de notificaciones -->
+                <div id="notification-area"></div>
+                
+                <!-- Tabla de empleados -->
+                <div class="employee-table-container">
+                    <table class="employee-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="empleados-table-body">
+                            <!-- Los empleados se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para agregar empleado (inicialmente oculto) -->
+        <div class="hidden-form" id="form-agregar">
+            <div class="content-area">
+                <h3 class="panel-title">Agregar Nuevo Empleado</h3>
+                
+                <div class="form-container">
+                    <form id="empleado-form">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" name="nombre" id="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellido</label>
+                            <input type="text" class="form-input" name="apellido" id="apellido" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" name="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-input" name="telefono" id="telefono">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Rol</label>
+                            <input type="text" class="form-input" name="rol" id="rol" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" class="form-input" name="password" id="password" required>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="activo" name="activo" checked>
+                                <span class="checkbox-text">Empleado Activo</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="submit-btn">Guardar Empleado</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-to-list">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para actualizar empleado -->
+        <div class="hidden-form" id="form-actualizar">
+            <div class="content-area">
+                <h3 class="panel-title">Actualizar Empleado</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Empleado</label>
+                        <input type="number" class="form-input" id="id-actualizar" required>
+                        <button class="submit-btn" id="btn-cargar-empleado" style="margin-top: 10px;">Cargar Empleado</button>
+                    </div>
+                    
+                    <form id="actualizar-form" style="display: none;">
+                        <input type="hidden" id="actualizar-id">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" id="actualizar-nombre">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellido</label>
+                            <input type="text" class="form-input" id="actualizar-apellido">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" id="actualizar-email">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-input" id="actualizar-telefono">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Rol</label>
+                            <input type="text" class="form-input" id="actualizar-rol">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <select class="form-input" id="actualizar-activo">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-btn">Actualizar Empleado</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-from-actualizar">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vista de detalles del empleado -->
+        <div class="hidden-form" id="form-detalles">
+            <div class="content-area">
+                <h3 class="panel-title">Detalles del Empleado</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Empleado</label>
+                        <div class="search-box">
+                            <input type="number" class="search-input" id="id-detalles" required>
+                            <button class="search-button" id="btn-buscar-detalles">Buscar</button>
+                        </div>
+                    </div>
+                    
+                    <div id="detalles-contenido" style="display: none;">
+                        <div class="employee-details">
+                            <h3 id="detalles-nombre-completo"></h3>
+                            <div class="detail-row">
+                                <div class="detail-label">ID:</div>
+                                <div class="detail-value" id="detalles-id"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Nombre:</div>
+                                <div class="detail-value" id="detalles-nombre"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Apellido:</div>
+                                <div class="detail-value" id="detalles-apellido"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Email:</div>
+                                <div class="detail-value" id="detalles-email"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Teléfono:</div>
+                                <div class="detail-value" id="detalles-telefono"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Rol:</div>
+                                <div class="detail-value" id="detalles-rol"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Estado:</div>
+                                <div class="detail-value" id="detalles-estado"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="nav-back" id="back-from-detalles">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para asignar rol -->
+        <div class="hidden-form" id="form-asignar-rol">
+            <div class="content-area">
+                <h3 class="panel-title">Asignar Rol a Empleado</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Empleado</label>
+                        <input type="number" class="form-input" id="id-rol" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nuevo Rol</label>
+                        <input type="text" class="form-input" id="nuevo-rol" required>
+                    </div>
+                    <button class="submit-btn" id="btn-asignar-rol-submit">Asignar Rol</button>
+                    
+                    <a href="#" class="nav-back" id="back-from-rol">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="mini-logo"></div>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Soporte</a>
+                </div>
+                <p>© 2025 Xtart Tech Solutions | Todos los derechos reservados</p>
+                <p class="footer-motto">Innovación. Excelencia. Futuro.</p>
+                <div class="footer-tech-line"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="empleados.js"></script>
+</body>
+</html>

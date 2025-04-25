@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos - Xtart Tech Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="productos.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="tech-grid"></div>
+        <div class="floating-particles"></div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    
+                    <img src="xtartfp_logo.jpg" alt="Xtart Tech Solutions" class="logo-image">
+                </div>
+                <h1><span class="company-name">XTART SOLUTIONS</span></h1>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="#" class="nav-link">Servicios</a></li>
+                    <li><a href="#" class="nav-link">Nosotros</a></li>
+                    <li><a href="#" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <h2 class="subtitle">GESTIÓN DE PRODUCTOS - Sistema avanzado de inventario y catálogo</h2>
+        
+        <!-- Menú de navegación -->
+        <div class="menu">
+            <a href="index.html">Panel Principal</a>
+            <a href="clientes.html">Gestión de Clientes</a>
+            <a href="empleados.html">Gestión de Empleados</a>
+            <a href="productos.html" class="active">Gestión de Productos</a>
+            <a href="ventas.html">Gestión de Ventas</a>
+        </div>
+        
+        <!-- Panel de estadísticas -->
+        <div class="status-panel">
+            <div class="status-card">
+                <div class="status-card-title">PRODUCTOS TOTALES</div>
+                <div class="status-card-value" id="total-productos">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">PRODUCTOS ACTIVOS</div>
+                <div class="status-card-value" id="productos-activos">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">STOCK TOTAL</div>
+                <div class="status-card-value" id="stock-total">0</div>
+            </div>
+        </div>
+        
+        <!-- Panel principal de productos -->
+        <div class="product-panel">
+            <!-- Panel de control lateral -->
+            <div class="control-panel">
+                <h3 class="panel-title">Panel de Control</h3>
+                <div class="control-option">
+                    <button class="control-button" id="btn-agregar">Agregar Producto</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-listar">Listar Todos los Productos</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-buscar-panel">Buscar Producto</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-actualizar-panel">Actualizar Producto</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-inventario-panel">Gestionar Inventario</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-filtrar-precio">Filtrar por Precio</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-mas-vendidos">Productos Más Vendidos</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-baja-existencia">Productos Baja Existencia</button>
+                </div>
+            </div>
+            
+            <!-- Área principal de contenido -->
+            <div class="content-area" id="main-content">
+                <!-- Área de búsqueda -->
+                <div class="search-box">
+                    <input type="text" class="search-input" id="search-producto" placeholder="Buscar producto por nombre...">
+                    <button class="search-button" id="btn-buscar">Buscar</button>
+                </div>
+                
+                <!-- Área de notificaciones -->
+                <div id="notification-area"></div>
+                
+                <!-- Tabla de productos -->
+                <div class="product-table-container">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productos-table-body">
+                            <!-- Los productos se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para agregar producto (inicialmente oculto) -->
+        <div class="hidden-form" id="form-agregar">
+            <div class="content-area">
+                <h3 class="panel-title">Agregar Nuevo Producto</h3>
+                
+                <div class="form-container">
+                    <form id="producto-form">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" name="nombre" id="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-input" name="descripcion" id="descripcion" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Precio</label>
+                            <input type="number" class="form-input" name="precio" id="precio" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-input" name="stock" id="stock" min="0" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Guardar Producto</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-to-list">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para actualizar producto -->
+        <div class="hidden-form" id="form-actualizar">
+            <div class="content-area">
+                <h3 class="panel-title">Actualizar Producto</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Producto</label>
+                        <input type="number" class="form-input" id="id-actualizar" required>
+                        <button class="submit-btn" id="btn-cargar-producto" style="margin-top: 10px;">Cargar Producto</button>
+                    </div>
+                    
+                    <form id="actualizar-form" style="display: none;">
+                        <input type="hidden" id="actualizar-id">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" id="actualizar-nombre">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-input" id="actualizar-descripcion" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Precio</label>
+                            <input type="number" class="form-input" id="actualizar-precio" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-input" id="actualizar-stock" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <select class="form-input" id="actualizar-activo">
+                                <option value="true">Activo</option>
+                                <option value="false">Inactivo</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-btn">Actualizar Producto</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-from-actualizar">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para gestionar inventario -->
+        <div class="hidden-form" id="form-inventario">
+            <div class="content-area">
+                <h3 class="panel-title">Gestionar Inventario</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Producto</label>
+                        <input type="number" class="form-input" id="id-inventario" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-input" id="cantidad-inventario" min="1" required>
+                    </div>
+                    <div class="form-group radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-operacion" id="agregar-stock" value="true" checked>
+                            <span class="radio-text">Agregar al Stock</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-operacion" id="quitar-stock" value="false">
+                            <span class="radio-text">Quitar del Stock</span>
+                        </label>
+                    </div>
+                    <button class="submit-btn" id="btn-actualizar-inventario">Actualizar Inventario</button>
+                    
+                    <a href="#" class="nav-back" id="back-from-inventario">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para filtrar por precio -->
+        <div class="hidden-form" id="form-filtrar-precio">
+            <div class="content-area">
+                <h3 class="panel-title">Filtrar Productos por Precio</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">Precio Mínimo</label>
+                        <input type="number" class="form-input" id="precio-min" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Precio Máximo</label>
+                        <input type="number" class="form-input" id="precio-max" min="0" step="0.01" required>
+                    </div>
+                    <button class="submit-btn" id="btn-aplicar-filtro">Aplicar Filtro</button>
+                    
+                    <a href="#" class="nav-back" id="back-from-filtro">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="mini-logo"></div>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Soporte</a>
+                </div>
+                <p>© 2025 Xtart Tech Solutions | Todos los derechos reservados</p>
+                <p class="footer-motto">Innovación. Excelencia. Futuro.</p>
+                <div class="footer-tech-line"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="productos.js"></script>
+</body>
+</html>

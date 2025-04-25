@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Ventas - Xtart Tech Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ventas.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="tech-grid"></div>
+        <div class="floating-particles"></div>
+    </div>
+
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="xtartfp_logo.jpg" alt="Xtart Tech Solutions" class="logo-image">
+                </div>
+                <h1><span class="company-name">XTART SOLUTIONS</span></h1>
+            </div>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="#" class="nav-link">Servicios</a></li>
+                    <li><a href="#" class="nav-link">Nosotros</a></li>
+                    <li><a href="#" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <h2 class="subtitle">GESTIÓN DE VENTAS - Sistema avanzado de facturación y seguimiento</h2>
+        
+        <!-- Menú de navegación -->
+        <div class="menu">
+            <a href="index.html">Panel Principal</a>
+            <a href="clientes.html">Gestión de Clientes</a>
+            <a href="empleados.html">Gestión de Empleados</a>
+            <a href="productos.html">Gestión de Productos</a>
+            <a href="ventas.html" class="active">Gestión de Ventas</a>
+        </div>
+        
+        <!-- Panel de estadísticas -->
+        <div class="status-panel">
+            <div class="status-card">
+                <div class="status-card-title">VENTAS TOTALES</div>
+                <div class="status-card-value" id="total-ventas">0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">INGRESOS TOTAL</div>
+                <div class="status-card-value" id="ingresos-total">$0</div>
+            </div>
+            <div class="status-card">
+                <div class="status-card-title">VENTAS HOY</div>
+                <div class="status-card-value" id="ventas-hoy">0</div>
+            </div>
+        </div>
+        
+        <!-- Panel principal de ventas -->
+        <div class="sales-panel">
+            <!-- Panel de control lateral -->
+            <div class="control-panel">
+                <h3 class="panel-title">Panel de Control</h3>
+                <div class="control-option">
+                    <button class="control-button" id="btn-nueva-venta">Nueva Venta</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-listar">Listar Todas las Ventas</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-buscar-venta">Buscar Venta</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-detalle-venta">Ver Detalle de Venta</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-ventas-cliente">Ventas por Cliente</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-ventas-producto">Ventas por Producto</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-ventas-vendedor">Ventas por Vendedor</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-aplicar-descuento">Aplicar Descuento</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-devolucion">Gestionar Devolución</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-reporte">Generar Reporte</button>
+                </div>
+                <div class="control-option">
+                    <button class="control-button" id="btn-exportar">Exportar Ventas</button>
+                </div>
+            </div>
+            
+            <!-- Área principal de contenido -->
+            <div class="content-area" id="main-content">
+                <!-- Área de búsqueda -->
+                <div class="search-box">
+                    <input type="number" class="search-input" id="search-venta-id" placeholder="Buscar venta por ID...">
+                    <button class="search-button" id="btn-buscar">Buscar</button>
+                </div>
+                
+                <!-- Área de notificaciones -->
+                <div id="notification-area"></div>
+                
+                <!-- Tabla de ventas -->
+                <div class="sales-table-container">
+                    <table class="sales-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Vendedor</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ventas-table-body">
+                            <!-- Las ventas se cargarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para nueva venta (inicialmente oculto) -->
+        <div class="hidden-form" id="form-nueva-venta">
+            <div class="content-area">
+                <h3 class="panel-title">Registrar Nueva Venta</h3>
+                
+                <div class="form-container">
+                    <form id="venta-form">
+                        <div class="form-group">
+                            <label class="form-label">Cliente</label>
+                            <select class="form-input" id="cliente-id" required>
+                                <option value="">Seleccione un cliente</option>
+                                <!-- Las opciones se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Vendedor</label>
+                            <select class="form-input" id="empleado-id" required>
+                                <option value="">Seleccione un vendedor</option>
+                                <!-- Las opciones se cargarán dinámicamente -->
+                            </select>
+                        </div>
+                        
+                        <h4 class="section-subtitle">Productos</h4>
+                        <div id="productos-container">
+                            <div class="producto-row">
+                                <div class="form-group">
+                                    <label class="form-label">Producto</label>
+                                    <select class="form-input producto-select" required>
+                                        <option value="">Seleccione un producto</option>
+                                        <!-- Las opciones se cargarán dinámicamente -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Cantidad</label>
+                                    <input type="number" class="form-input cantidad-input" min="1" value="1" required>
+                                </div>
+                                <div class="form-group precio-display">
+                                    <label class="form-label">Precio</label>
+                                    <div class="precio-valor">$0.00</div>
+                                </div>
+                                <div class="form-group subtotal-display">
+                                    <label class="form-label">Subtotal</label>
+                                    <div class="subtotal-valor">$0.00</div>
+                                </div>
+                                <button type="button" class="remove-producto-btn">×</button>
+                            </div>
+                        </div>
+                        
+                        <div class="add-producto-container">
+                            <button type="button" class="add-producto-btn" id="btn-add-producto">+ Agregar otro producto</button>
+                        </div>
+                        
+                        <div class="total-container">
+                            <div class="total-label">Total:</div>
+                            <div class="total-value" id="venta-total">$0.00</div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Registrar Venta</button>
+                    </form>
+                    
+                    <a href="#" class="nav-back" id="back-to-list">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para ver detalle de venta -->
+        <div class="hidden-form" id="form-detalle-venta">
+            <div class="content-area">
+                <h3 class="panel-title">Detalle de Venta</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID de la Venta</label>
+                        <div class="search-box">
+                            <input type="number" class="search-input" id="id-detalle" required>
+                            <button class="search-button" id="btn-buscar-detalle">Buscar</button>
+                        </div>
+                    </div>
+                    
+                    <div id="detalle-venta-contenido" style="display: none;">
+                        <div class="venta-info">
+                            <div class="venta-header">
+                                <div class="venta-id">Venta #<span id="detalle-venta-id"></span></div>
+                                <div class="venta-fecha">Fecha: <span id="detalle-venta-fecha"></span></div>
+                            </div>
+                            <div class="cliente-info">
+                                <div class="info-label">Cliente:</div>
+                                <div class="info-value" id="detalle-cliente"></div>
+                            </div>
+                            <div class="empleado-info">
+                                <div class="info-label">Vendedor:</div>
+                                <div class="info-value" id="detalle-empleado"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="detalle-productos">
+                            <h4 class="detalle-subtitle">Productos</h4>
+                            <table class="detalle-table">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detalle-productos-body">
+                                    <!-- Los productos se cargarán aquí dinámicamente -->
+                                </tbody>
+                            </table>
+                            
+                            <div class="detalle-totales">
+                                <div class="total-row">
+                                    <div class="total-label">Total:</div>
+                                    <div class="total-value" id="detalle-total">$0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="nav-back" id="back-from-detalle">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para buscar ventas por cliente -->
+        <div class="hidden-form" id="form-ventas-cliente">
+            <div class="content-area">
+                <h3 class="panel-title">Ventas por Cliente</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID del Cliente</label>
+                        <div class="search-box">
+                            <input type="number" class="search-input" id="id-cliente-ventas" required>
+                            <button class="search-button" id="btn-buscar-ventas-cliente">Buscar</button>
+                        </div>
+                    </div>
+                    
+                    <div id="ventas-cliente-contenido" style="display: none;">
+                        <div class="cliente-info-header">
+                            <h4>Cliente: <span id="ventas-cliente-nombre"></span></h4>
+                        </div>
+                        
+                        <div class="ventas-cliente-list">
+                            <table class="sales-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ventas-cliente-body">
+                                    <!-- Las ventas se cargarán aquí dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="nav-back" id="back-from-ventas-cliente">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulario para aplicar descuento -->
+        <div class="hidden-form" id="form-aplicar-descuento">
+            <div class="content-area">
+                <h3 class="panel-title">Aplicar Descuento a Venta</h3>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="form-label">ID de la Venta</label>
+                        <input type="number" class="form-input" id="id-venta-descuento" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Porcentaje de Descuento</label>
+                        <input type="number" class="form-input" id="porcentaje-descuento" min="0" max="100" step="0.01" required>
+                    </div>
+                    <button class="submit-btn" id="btn-aplicar-descuento-submit">Aplicar Descuento</button>
+                    
+                    <a href="#" class="nav-back" id="back-from-descuento">← Volver al listado</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección para mostrar ventas por producto y por vendedor se implementará de manera dinámica -->
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="mini-logo"></div>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Soporte</a>
+                </div>
+                <p>© 2025 Xtart Tech Solutions | Todos los derechos reservados</p>
+                <p class="footer-motto">Innovación. Excelencia. Futuro.</p>
+                <div class="footer-tech-line"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="ventas.js"></script>
+</body>
+</html>

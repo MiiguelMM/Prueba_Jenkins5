@@ -1,6 +1,5 @@
 package com.crm.AM;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -46,7 +45,7 @@ class ProyectoFinalApplicationTests {
         List<DetalleFactura> detalles = new ArrayList<>();
         
         // Crear una nueva factura
-        Factura factura = new Factura(null, cliente1, null, BigDecimal.valueOf(10000), detalles);
+        Factura factura = new Factura(null, cliente1, null, 10000.00, detalles);
 
         // Guardar la factura en la base de datos
         facturaRepository.save(factura);

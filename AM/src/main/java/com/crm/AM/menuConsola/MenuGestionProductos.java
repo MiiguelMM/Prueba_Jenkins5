@@ -1,5 +1,6 @@
 package com.crm.AM.menuConsola;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ public class MenuGestionProductos {
     @Autowired
     private ProductoRepository productoRepository;
 
-    void menuGestionProductos() {
+    public void menuGestionProductos() {
         Scanner n = new Scanner(System.in);
         boolean salir = false;
     
@@ -97,31 +98,46 @@ public class MenuGestionProductos {
     }
     
     void submenuVerProductosMasVendidos() {
-        // Lógica para mostrar los productos más vendidos
         Scanner n = new Scanner(System.in);
-
+    
         System.out.println("Lista de productos más vendidos:");
-
-
-        System.out.println("¿Porque opcion quieres filtrar?");
+        System.out.println("¿Por qué opción quieres filtrar?");
         System.out.println("1. Top 5 productos con mayor ventas");
         System.out.println("2. Top 5 productos con menores ventas");
-        System.out.println("3. Filtrar por rango");
-
+    
         int eleccion = n.nextInt();
-
+    
+        List<Object[]> ranking = detalleFacturaRespository.findRankingProductosVendidos();
+    
         switch (eleccion) {
-            case 1:
-                
-                
+            case 1: // Top 5 más vendidos
+                System.out.println("\n Top 5 productos más vendidos:");
+                for (int i = 0; i < Math.min(5, ranking.size()); i++) {
+                    Producto producto = (Producto) ranking.get(i)[0];
+                    Long cantidad = (Long) ranking.get(i)[1];
+                    System.out.println((i + 1) + ". " + producto.getNombre() + " - " + cantidad + " unidades");
+                }
                 break;
+    
+            case 2: // Top 5 menos vendidos
+                System.out.println("\n Top 5 productos menos vendidos:");
+                int total = ranking.size();
+                Collections.reverse(ranking); // Invertir el orden de la lista
+
+                for (int i = Math.max(0, total - 5); i < total; i++) {
+                    Producto producto = (Producto) ranking.get(i)[0];
+                    Long cantidad = (Long) ranking.get(i)[1];
+                    System.out.println((i + 1) + ". " + producto.getNombre() + " - " + cantidad + " unidades");
+                }
+                break;
+    
+    
             default:
-                throw new AssertionError();
+                System.out.println("Opción inválida.");
+                break;
         }
-
-
-        // Mostrar los productos más vendidos
     }
+    
     
 
     void submenuAgregarProducto() {
@@ -217,7 +233,7 @@ public class MenuGestionProductos {
         String inputPrecio = n.nextLine().trim();
         if (!inputPrecio.isEmpty()) {
             try {
-                producto.setPrecio(Double.parseDouble(inputPrecio));
+                producto.setPrecio(Double.valueOf(inputPrecio));
             } catch (NumberFormatException e) {
                 System.out.println("Formato de precio inválido. Se mantiene el valor actual.");
             }
@@ -228,7 +244,7 @@ public class MenuGestionProductos {
         String inputStock = n.nextLine().trim();
         if (!inputStock.isEmpty()) {
             try {
-                producto.setStock(Integer.parseInt(inputStock));
+                producto.setStock(Integer.valueOf(inputStock));
             } catch (NumberFormatException e) {
                 System.out.println("Formato de stock inválido. Se mantiene el valor actual.");
             }

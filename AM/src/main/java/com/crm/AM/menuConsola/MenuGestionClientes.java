@@ -1,6 +1,7 @@
 package com.crm.AM.menuConsola;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,23 @@ import org.springframework.stereotype.Component;
 
 import com.crm.AM.entities.Cliente;
 import com.crm.AM.repository.ClienteRepository;
+import com.crm.AM.repository.FacturaRepository;
+import com.crm.AM.service.EmailService;
+
 
 @Component
 public class MenuGestionClientes {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private FacturaRepository facturaRepository;
 
-    void menuGestionClientes() {
+    @Autowired
+    private EmailService emailService;
+    
+
+    public void menuGestionClientes() {
         Scanner n = new Scanner(System.in);
         boolean salir = false;
 
@@ -181,11 +191,37 @@ public class MenuGestionClientes {
     }
 
     void submenuEnviarOferta() {
-        System.out.println("Funcionalidad de enviar oferta a cliente aún no implementada.");
+        Scanner scanner = new Scanner(System.in);
+    
+        System.out.print("Ingrese el ID del cliente para enviar la oferta: ");
+        int clienteId = scanner.nextInt();
+    
+        Optional<Cliente> clienteOpt = clienteRepository.findById((long) clienteId);
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+            String email = cliente.getEmail();
+    
+            String asunto = "¡Oferta exclusiva para ti!";
+            String contenido = "Hola " + cliente.getNombre() + ",\n\nTenemos una oferta especial solo para ti. ¡No te la pierdas!";
+    
+            emailService.enviarCorreoOferta(email, asunto, contenido);
+    
+            System.out.println("Correo enviado exitosamente a " + cliente.getNombre());
+        } else {
+            System.out.println("Cliente no encontrado.");
+        }
     }
 
     void submenuClientesFrecuentes() {
-        System.out.println("Funcionalidad para mostrar clientes frecuentes aún no implementada.");
+        List<Object[]> resultados = facturaRepository.findClientesFrecuentes();
+    
+        System.out.println("Clientes más frecuentes:");
+        for (int i = 0; i < Math.min(resultados.size(), 5); i++) {
+            Cliente cliente = (Cliente) resultados.get(i)[0];
+            Long totalCompras = (Long) resultados.get(i)[1];
+    
+            System.out.println((i + 1) + ". " + cliente.getNombre() + " - " + totalCompras + " compras");
+        }
     }
 
     void submenuClientesInactivos() {
