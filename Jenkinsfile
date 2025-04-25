@@ -10,6 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compilando proyecto...'
+                sh 'chmod +x ./mvnw'  // Agregar este paso
                 sh './mvnw clean install'
             }
         }
