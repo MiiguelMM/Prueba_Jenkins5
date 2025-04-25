@@ -1,0 +1,28 @@
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configuración de la base de datos -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/prueba_hibernate?createDatabaseIfNotExist=true</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admin</property>
+
+        <!-- Dialecto de Hibernate -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+        <!-- Mostrar SQL en consola -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- Crear tablas automáticamente -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Configurar el nivel de logs -->
+        <property name="hibernate.use_sql_comments">true</property>
+
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Mapeo de entidades -->
+        <mapping class="com.example.entities.Employee"/>
+        <mapping class="com.example.entities.Car"/>
+    </session-factory>
+</hibernate-configuration>
